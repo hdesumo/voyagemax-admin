@@ -1,51 +1,49 @@
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+// src/components/Sidebar.jsx
+import React from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-function Sidebar() {
-  const location = useLocation()
-  const navigate = useNavigate()
-
-  const menuItems = [
-    { name: 'Dashboard', path: '/dashboard' },
-    { name: 'Véhicules', path: '/vehicles' },
-    { name: 'Chauffeurs', path: '/drivers' },
-    { name: 'Passagers', path: '/passengers' },
-    { name: 'Trajets', path: '/trips' },
-    { name: 'Réservations', path: '/bookings' },
-  ]
+const Sidebar = () => {
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem('adminToken')
-    navigate('/login')
-  }
+    localStorage.clear();
+    navigate('/login');
+  };
+
+  const links = [
+    { to: '/dashboard', label: 'Tableau de bord' },
+    { to: '/vehicles', label: 'Véhicules' },
+    { to: '/drivers', label: 'Chauffeurs' },
+    { to: '/passengers', label: 'Passagers' },
+    { to: '/trips', label: 'Trajets' },
+    { to: '/bookings', label: 'Réservations' },
+    { to: '/admin-profile', label: 'Profil' },
+  ];
 
   return (
-    <div className="h-screen w-64 bg-gray-900 text-white fixed flex flex-col justify-between p-4">
-      <div>
-        <h1 className="text-2xl font-bold mb-6 text-center">VoyageMax</h1>
-        <nav className="flex flex-col gap-2">
-          {menuItems.map((item) => (
-            <Link
-              key={item.name}
-              to={item.path}
-              className={`px-4 py-2 rounded ${
-                location.pathname === item.path
-                  ? 'bg-blue-600 text-white font-semibold'
-                  : 'hover:bg-gray-700'
-              }`}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-      </div>
-      <button
-        onClick={handleLogout}
-        className="mt-4 px-4 py-2 bg-red-600 rounded hover:bg-red-700 text-white font-semibold"
-      >
-        Se déconnecter
-      </button>
-    </div>
-  )
-}
+    <aside className="bg-blue-800 text-white w-64 min-h-screen p-6 fixed">
+      <h2 className="text-2xl font-bold mb-8">VoyageMax Admin</h2>
+      <nav className="flex flex-col gap-4">
+        {links.map((link) => (
+          <NavLink
+            key={link.to}
+            to={link.to}
+            className={({ isActive }) =>
+              isActive ? 'text-yellow-300 font-semibold' : 'text-white'
+            }
+          >
+            {link.label}
+          </NavLink>
+        ))}
+        <button
+          onClick={handleLogout}
+          className="mt-8 bg-red-500 hover:bg-red-600 px-3 py-2 rounded"
+        >
+          Déconnexion
+        </button>
+      </nav>
+    </aside>
+  );
+};
 
-export default Sidebar
+export default Sidebar;
