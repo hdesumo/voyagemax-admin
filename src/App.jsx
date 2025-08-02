@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
@@ -17,115 +17,19 @@ import Layout from './components/Layout';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Auth */}
-        <Route path="/login" element={<LoginPage />} />
-
-        {/* Routes protégées avec sidebar */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute role="admin">
-              <Layout>
-                <DashboardPage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/admin-profile"
-          element={
-            <ProtectedRoute role="admin">
-              <Layout>
-                <AdminProfilePage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/agency-profile"
-          element={
-            <ProtectedRoute role="admin">
-              <Layout>
-                <AgencyProfilePage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/superadmin-profile"
-          element={
-            <ProtectedRoute role="superadmin">
-              <Layout>
-                <SuperAdminProfilePage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/vehicles"
-          element={
-            <ProtectedRoute role="admin">
-              <Layout>
-                <VehiclesPage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/drivers"
-          element={
-            <ProtectedRoute role="admin">
-              <Layout>
-                <DriversPage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/passengers"
-          element={
-            <ProtectedRoute role="admin">
-              <Layout>
-                <PassengersPage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/trips"
-          element={
-            <ProtectedRoute role="admin">
-              <Layout>
-                <TripsPage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/bookings"
-          element={
-            <ProtectedRoute role="admin">
-              <Layout>
-                <BookingsPage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Fallback */}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/dashboard" element={<ProtectedRoute role="admin"><Layout><DashboardPage /></Layout></ProtectedRoute>} />
+      <Route path="/admin-profile" element={<ProtectedRoute role="admin"><Layout><AdminProfilePage /></Layout></ProtectedRoute>} />
+      <Route path="/agency-profile" element={<ProtectedRoute role="admin"><Layout><AgencyProfilePage /></Layout></ProtectedRoute>} />
+      <Route path="/superadmin-profile" element={<ProtectedRoute role="superadmin"><Layout><SuperAdminProfilePage /></Layout></ProtectedRoute>} />
+      <Route path="/vehicles" element={<ProtectedRoute role="admin"><Layout><VehiclesPage /></Layout></ProtectedRoute>} />
+      <Route path="/drivers" element={<ProtectedRoute role="admin"><Layout><DriversPage /></Layout></ProtectedRoute>} />
+      <Route path="/passengers" element={<ProtectedRoute role="admin"><Layout><PassengersPage /></Layout></ProtectedRoute>} />
+      <Route path="/trips" element={<ProtectedRoute role="admin"><Layout><TripsPage /></Layout></ProtectedRoute>} />
+      <Route path="/bookings" element={<ProtectedRoute role="admin"><Layout><BookingsPage /></Layout></ProtectedRoute>} />
+      <Route path="*" element={<Navigate to="/dashboard" />} />
+    </Routes>
   );
 }
 
